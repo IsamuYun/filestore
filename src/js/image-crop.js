@@ -67,6 +67,10 @@ class ImageCropper extends React.Component {
             )
             .progress((p) => {
                 console.log('progress', p);
+
+                let status_box = document.getElementById("status-box");
+                status_box.value = "";
+                status_box.value = p.status;
             })
             .then((result) => {
                 console.log(result);
@@ -152,10 +156,16 @@ class ImageCropper extends React.Component {
                         <label className="label-title">文字内容</label>
                     </div>
                     <div className="content-box">
-                        <textarea id="extaction-content" className="content-area" placeholder="ABCDEFG"></textarea>
+                        <textarea id="extaction-content" className="content-area" placeholder="识别出的文字内容"></textarea>
                     </div>
                     <div>
                         <label className="label-title">关键字</label>
+                    </div>
+                    <div>
+                        <label className="label-title">状态</label>
+                    </div>
+                    <div>
+                        <textarea id="status-box" className="content-area" placeholder="当前状态"></textarea>
                     </div>
                 </div>
             </div>
