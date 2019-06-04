@@ -57,7 +57,7 @@ class ImageCropper extends React.Component {
             const { TesseractWorker } = Tesseract;
         
             const worker = new TesseractWorker({
-                langPath: "/data"
+                langPath: process.env.PUBLIC_URL + "/data/"
             });
                 
             const canvas = document.getElementById("crop-editor");
