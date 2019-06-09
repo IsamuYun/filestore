@@ -1,11 +1,10 @@
-import React, { PureComponent } from "react";
-import ReactDOM from "react-dom";
+import React from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
 import "../css/app.css";
 
-import Tesseract from "tesseract.js";
+// import Tesseract from "tesseract.js";
 
 class ImageCropper extends React.Component {
     
@@ -53,7 +52,13 @@ class ImageCropper extends React.Component {
                 "newFile.jpeg"
             );
             this.setState({ croppedImageUrl });
-            
+
+            const canvas_box = document.getElementById("crop-editor");
+
+            let base64_encode = canvas_box.toDataURL("image/png");
+            let content_box = document.getElementById("extaction-content");
+            content_box.value = base64_encode;
+            /*
             const { TesseractWorker } = Tesseract;
         
             const worker = new TesseractWorker({
@@ -79,7 +84,7 @@ class ImageCropper extends React.Component {
                 content_box.value = result.text;
             });
 
-
+            */
         }
     }
 

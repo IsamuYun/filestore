@@ -1,0 +1,39 @@
+[
+    {
+        "text": "This is first node from timeline",
+        "date": "March 03 2017",
+        "category": {
+            "tag": "Medium",
+            "color": "#018F69"
+        },
+        "link": {
+            "url": "http://36techfreedom.com",
+            "text": "36 Tech"
+        }
+    },
+    {
+        "text": "This is second node from timeline",
+        "date": "March 04 2017",
+        "category": {
+            "tag": "Medium",
+            "color": "#018F69"
+        },
+        "link": {
+            "url": "http://36techfreedom.com",
+            "text": "36 Tech"
+        }
+    },
+    {
+        "text": "This is third node from timeline",
+        "date": "March 05 2017",
+        "category": {
+            "tag": "Medium",
+            "color": "#018F69"
+        },
+        "link": {
+            "url": "http://36techfreedom.com",
+            "text": "36 Tech"
+        }
+    }
+
+]
