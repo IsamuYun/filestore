@@ -84,7 +84,7 @@ class App extends React.Component {
                 </button>
             </div>
             <div id="viewContainer" ref={this.viewerContainer}>
-                <div id="viewer" ref={this.viewer} className="pdfViewer" />    
+                <canvas id="viewer" ref={this.viewer} className="pdfViewer" />    
             </div>
             </div>
         );
