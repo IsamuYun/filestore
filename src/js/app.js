@@ -28,14 +28,30 @@ class App extends React.Component {
             this.pdfViewer.currentPageNumber--;
         }
     }
+
+    onMouseDown = (what) => {
+        
+        console.log("on copy?");
+    }
     
+    onMouseMove = () => {
+        console.log("mouse move");
+    }
+
+    onMouseUp = () => {
+        console.log("mouse up");
+    }
+
 
     componentDidMount() {
         let container = document.getElementById("viewContainer");
         let viewer = document.getElementById("viewer");
 
         PdfJsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
-        PdfJsLib.getDocument(this.props.file).then((pdf) => {
+
+        let loadingTask = PdfJsLib.getDocument(this.props.file);
+        
+        loadingTask.promise.then((pdf) => {
             this.setState({ numPages: pdf.numPages });
             this.pdfLinkService = new pdfjsViewer.PDFLinkService();
             this.pdfFindController = new pdfjsViewer.PDFFindController({
@@ -62,6 +78,7 @@ class App extends React.Component {
                 });
             });
 
+            
         })
     }
 
@@ -84,7 +101,9 @@ class App extends React.Component {
                 </button>
             </div>
             <div id="viewContainer" ref={this.viewerContainer}>
-                <canvas id="viewer" ref={this.viewer} className="pdfViewer" />    
+                <div id="viewer" ref={this.viewer} className="pdfViewer" 
+                    onMouseDown={this.onMouseDown} 
+                    onMouseUp={this.onMouseUp}/>    
             </div>
             </div>
         );
