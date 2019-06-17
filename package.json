@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "fsevents": "^2.0.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-image-crop": "^7.0.3",
     "react-pdf": "^4.0.5",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "typescript": "^3.5.1"
   },
   "scripts": {
     "start": "react-scripts start",

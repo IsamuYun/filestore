@@ -5,10 +5,19 @@ import PdfJsLib from "pdfjs-dist";
 import "pdfjs-dist/web/pdf_viewer.css";
 import * as pdfjsViewer from "pdfjs-dist/web/pdf_viewer";
 
+import "../css/app.css";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
+        this.mouse_down_x = 0;
+        this.mouse_down_y = 0;
+        this.mouse_up_x = 0;
+        this.mouse_up_y = 0;
+        this.evidence_number_x = 0;
+        this.evidence_number_y = 0;
+        this.evidence_number = 0;
+        this.select_id = "";
     }
     
     onNextPageClick = () => {
@@ -29,17 +38,72 @@ class App extends React.Component {
         }
     }
 
-    onMouseDown = (what) => {
-        
-        console.log("on copy?");
+    onMouseDown = (event) => {
+        console.log(`pageX: ${event.pageX}, clientY: ${event.pageY}`);
+        this.mouse_down_x = event.pageX;
+        this.mouse_down_y = event.pageY;
+
     }
     
-    onMouseMove = () => {
-        console.log("mouse move");
+    onCopy = (event) => {
+        console.log(event.clipboardData.getData("Text"));
     }
 
-    onMouseUp = () => {
-        console.log("mouse up");
+    onMouseUp = (event) => {
+        this.mouse_up_x = event.pageX;
+        this.mouse_up_y = event.pageY;
+
+        
+        console.log(`pageX: ${event.pageX}, pageY: ${event.pageY}`);
+
+        let selectedText = window.getSelection();
+        
+        let selectedRange = selectedText.getRangeAt(0);
+
+        let selectedRect = selectedRange.getBoundingClientRect();
+
+        console.log(selectedRect);
+
+        let left = Math.floor(selectedRect.left);
+        let top = Math.floor(selectedRect.top);
+        let height = Math.floor(selectedRect.height);
+        let width = Math.floor(selectedRect.width);
+        
+        this.evidence_number += 1;
+        
+        // 创建一个元素
+        let evidence_tag = document.createElement("div");
+        evidence_tag.setAttribute("id", "evidence-" + this.evidence_number);
+        evidence_tag.setAttribute("class", "evidence-number");
+        evidence_tag.style["left"] = left + "px";
+        evidence_tag.style["top"] = top + "px";
+        evidence_tag.style["height"] = height + "px";
+        evidence_tag.style["width"] = width + "px";
+        evidence_tag.innerText = this.evidence_number;
+        
+        let root = document.getElementById("app");
+        root.appendChild(evidence_tag);
+
+        evidence_tag.addEventListener("mousedown", (target_id) => {this.onSelectEvidence(evidence_tag.id)});
+        
+        
+        document.execCommand("copy");
+    }
+
+    onSelectEvidence = (target) => {
+        this.select_id = target;
+        console.log(this.select_id);
+    }
+
+    onDeleteEvidence = (event) => {
+        console.log(`Remove id: ${this.select_id}`);
+
+        if (event.keyCode === 8) {
+            let elem = document.getElementById(this.select_id);
+            if (elem !== null) {
+                elem.parentNode.removeChild(elem);
+            }
+        }
     }
 
 
@@ -53,6 +117,7 @@ class App extends React.Component {
         
         loadingTask.promise.then((pdf) => {
             this.setState({ numPages: pdf.numPages });
+            
             this.pdfLinkService = new pdfjsViewer.PDFLinkService();
             this.pdfFindController = new pdfjsViewer.PDFFindController({
                 linkService: this.pdfLinkService
@@ -80,6 +145,8 @@ class App extends React.Component {
 
             
         })
+
+        document.addEventListener("keydown", (event) => {this.onDeleteEvidence(event)});
     }
 
     render() {
@@ -103,7 +170,8 @@ class App extends React.Component {
             <div id="viewContainer" ref={this.viewerContainer}>
                 <div id="viewer" ref={this.viewer} className="pdfViewer" 
                     onMouseDown={this.onMouseDown} 
-                    onMouseUp={this.onMouseUp}/>    
+                    onMouseUp={this.onMouseUp}
+                    />    
             </div>
             </div>
         );
