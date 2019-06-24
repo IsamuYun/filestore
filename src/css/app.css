@@ -1,3 +1,40 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-page {
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.nav-bar {
+  margin: 0;
+  padding: 8px;
+  width: 100%;
+  height: 96px;
+}
+
 .evidence-number {
   z-index: 100;
   color: rgba(0, 0, 0, 0.6);

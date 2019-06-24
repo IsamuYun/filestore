@@ -5,6 +5,8 @@ import PdfJsLib from "pdfjs-dist";
 import "pdfjs-dist/web/pdf_viewer.css";
 import * as pdfjsViewer from "pdfjs-dist/web/pdf_viewer";
 
+import NavBar from "./components/UI/nav-bar";
+
 import "../css/app.css";
 
 class App extends React.Component {
@@ -151,28 +153,22 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
-            <div className="splitToolbarButton hiddenSmallView">
-                <button className="toolbarButton pageUp" 
-                    title="Previous Page" 
-                    id="previous" 
-                    tabIndex="13" data-l10n-id="previous" onClick={this.onPreviousPageClick}>
-                    <span data-l10n-id="previous_label">Previous</span>
-                </button>
-                <div className="splitToolbarButtonSeparator" />
-                <button className="toolbarButton pageDown" 
-                    title="Next Page" 
-                    id="next" 
-                    tabIndex="14" data-l10n-id="next" onClick={this.onNextPageClick}>
-                    <span data-l10n-id="next_label">Next</span>
-                </button>
-            </div>
-            <div id="viewContainer" ref={this.viewerContainer}>
-                <div id="viewer" ref={this.viewer} className="pdfViewer" 
-                    onMouseDown={this.onMouseDown} 
-                    onMouseUp={this.onMouseUp}
-                    />    
-            </div>
+            <div className="main-page flex-column">
+                <NavBar />
+                <div className="main-container">
+                    <div className="pdf-view-container">
+                        <div id="viewContainer" ref={this.viewerContainer}>
+                            <div id="viewer" ref={this.viewer} className="pdfViewer" 
+                                onMouseDown={this.onMouseDown} 
+                                onMouseUp={this.onMouseUp}
+                            />    
+                        </div>
+                    </div>
+                    <div className="right-container">
+
+                    </div>
+                </div>
+                
             </div>
         );
     }
