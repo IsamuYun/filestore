@@ -164,7 +164,7 @@ class App extends React.Component {
                             />    
                         </div>
                     </div>
-                    <div className="right-container">
+                    <div className="control-container">
 
                     </div>
                 </div>

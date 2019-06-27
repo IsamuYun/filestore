@@ -3,12 +3,14 @@ html {
 }
 
 body {
-  margin: 0;
-  padding: 0;
 }
 
+
 * {
-  box-sizing: border-box;
+  
+  /*box-sizing: border-box;*/
+  margin: 0;
+  padding: 0;
 }
 
 .flex-row {
@@ -22,17 +24,14 @@ body {
 }
 
 .main-page {
-  margin: 0;
-  padding: 0;
-  font-size: 2rem;
-  font-weight: 600;
+  width: 100%;
+
 }
 
 .nav-bar {
-  margin: 0;
-  padding: 8px;
   width: 100%;
-  height: 96px;
+  height: 64px;
+  box-sizing: border-box;
 }
 
 .evidence-number {
@@ -45,3 +44,27 @@ body {
   text-align: right;
   vertical-align: top;
 }
+
+.nav-left-bar {
+  width: 70%;
+  height: 100%;
+  padding: 8px 0px 8px 16px;
+  font-size: 24px;
+}
+
+.nav-right-bar {
+  width: 30%;
+}
+
+.pdf-view-container {
+  width: calc(70% - 4px);
+  height: calc(100% - 2px);
+  border: 1px solid #000000;
+}
+
+.control-container {
+  width: calc(30% - 2px);
+  height: calc(100% - 2px);
+  border: 1px solid #000000;
+}
+

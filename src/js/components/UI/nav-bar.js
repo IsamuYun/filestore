@@ -1,6 +1,12 @@
 import React from "react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+
+
 import "../../../css/app.css";
+
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -9,9 +15,9 @@ class NavBar extends React.Component {
 
     render() {
         return(
-            <div className="flex-column nav-bar">
+            <div className="flex-row nav-bar">
                 <div className="nav-left-bar">
-                    balabalalba
+                    <FontAwesomeIcon icon={faTwitter} />
                 </div>
                 <div className="nav-right-bar">
 
