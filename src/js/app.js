@@ -6,8 +6,17 @@ import "pdfjs-dist/web/pdf_viewer.css";
 import * as pdfjsViewer from "pdfjs-dist/web/pdf_viewer";
 
 import NavBar from "./components/UI/nav-bar";
+import EvidenceList from "./components/UI/evidence-list";
 
 import "../css/app.css";
+
+const NOW = new Date();
+
+const Evidences = [
+    { create_time: new Date(), content: "ABCDEFG" },
+    { create_time: new Date(2019, 5, 28), content: "JKLMN" },
+    { create_time: new Date(1979, 5, 8, 19), content: "Birthday"}
+];
 
 class App extends React.Component {
     constructor(props) {
@@ -20,7 +29,17 @@ class App extends React.Component {
         this.evidence_number_y = 0;
         this.evidence_number = 0;
         this.select_id = "";
+
+        this.state = {
+            is_selection_begin: false,
+            evidence_list: Evidences
+        }
+        
+        
+
     }
+
+
     
     onNextPageClick = () => {
         if(this.state.numPages > this.state.pageNumber) {
@@ -41,7 +60,7 @@ class App extends React.Component {
     }
 
     onMouseDown = (event) => {
-        console.log(`pageX: ${event.pageX}, clientY: ${event.pageY}`);
+        console.log(`pageX: ${event.pageX}, pageY: ${event.pageY}`);
         this.mouse_down_x = event.pageX;
         this.mouse_down_y = event.pageY;
 
@@ -54,7 +73,6 @@ class App extends React.Component {
     onMouseUp = (event) => {
         this.mouse_up_x = event.pageX;
         this.mouse_up_y = event.pageY;
-
         
         console.log(`pageX: ${event.pageX}, pageY: ${event.pageY}`);
 
@@ -64,21 +82,30 @@ class App extends React.Component {
 
         let selectedRect = selectedRange.getBoundingClientRect();
 
-        console.log(selectedRect);
-
+        
         let left = Math.floor(selectedRect.left);
         let top = Math.floor(selectedRect.top);
         let height = Math.floor(selectedRect.height);
-        let width = Math.floor(selectedRect.width);
+        let width = Math.floor(selectedRect.width) + 10;
+        
         
         this.evidence_number += 1;
+
+        if (top > 0) {
+            let line_gap = top % 25;
+            top = top - line_gap;
+            height = height + line_gap;
+        }
+
+
+
         
         // 创建一个元素
         let evidence_tag = document.createElement("div");
         evidence_tag.setAttribute("id", "evidence-" + this.evidence_number);
         evidence_tag.setAttribute("class", "evidence-number");
         evidence_tag.style["left"] = left + "px";
-        evidence_tag.style["top"] = top + "px";
+        evidence_tag.style["top"] = this.mouse_down_y + "px";
         evidence_tag.style["height"] = height + "px";
         evidence_tag.style["width"] = width + "px";
         evidence_tag.innerText = this.evidence_number;
@@ -90,6 +117,10 @@ class App extends React.Component {
         
         
         document.execCommand("copy");
+
+        let evidence = { create_time: new Date(), content: selectedText };
+        this.state.evidence_list.push(evidence);
+        this.setState({evidences_list: this.state.evidence_list});
     }
 
     onSelectEvidence = (target) => {
@@ -110,8 +141,8 @@ class App extends React.Component {
 
 
     componentDidMount() {
-        let container = document.getElementById("viewContainer");
-        let viewer = document.getElementById("viewer");
+        let container = document.getElementById("pdf-view-container");
+        let viewer = document.getElementById("pdf-viewer");
 
         PdfJsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
@@ -151,21 +182,33 @@ class App extends React.Component {
         document.addEventListener("keydown", (event) => {this.onDeleteEvidence(event)});
     }
 
+    // 标记selection开始
+    selectionBegin = () => {
+        this.setState({is_selection_begin: true});
+        let viewer = document.getElementById("pdf-viewer");
+        if (viewer !== null) {
+            viewer.style["cursor"] = "crosshair";
+        }
+        
+    }
+
+    onChangeDateTime = (date) => { this.setState({date})};
+
     render() {
         return (
             <div className="main-page flex-column">
-                <NavBar />
-                <div className="main-container">
+                <NavBar selectionStart={ this.selectionBegin }/>
+                <div className="main-container flex-row">
                     <div className="pdf-view-container">
-                        <div id="viewContainer" ref={this.viewerContainer}>
-                            <div id="viewer" ref={this.viewer} className="pdfViewer" 
-                                onMouseDown={this.onMouseDown} 
-                                onMouseUp={this.onMouseUp}
-                            />    
+                        <div id="pdf-view-container">
+                        <div id="pdf-viewer" className="pdfViewer" 
+                            onMouseDown={this.onMouseDown} 
+                            onMouseUp={this.onMouseUp}
+                        />
                         </div>
                     </div>
-                    <div className="control-container">
-
+                    <div className="control-container flex-column">
+                        <EvidenceList evidences={this.state.evidence_list} />
                     </div>
                 </div>
                 
