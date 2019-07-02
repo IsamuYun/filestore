@@ -47,8 +47,7 @@ class Evidence extends React.Component {
                 </div>
                 <div className="text-area flex-row">
                     <FontAwesomeIcon icon={ faEdit } className="text-icon" />
-                    <textarea className="text-content">
-                        { this.state.content }
+                    <textarea className="text-content" value={this.state.content}>
                     </textarea>
                 </div>
                 <div className="keyword-line flex-row">

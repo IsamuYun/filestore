@@ -60,7 +60,6 @@ class App extends React.Component {
     }
 
     onMouseDown = (event) => {
-        console.log(`pageX: ${event.pageX}, pageY: ${event.pageY}`);
         this.mouse_down_x = event.pageX;
         this.mouse_down_y = event.pageY;
 
@@ -118,7 +117,7 @@ class App extends React.Component {
         
         document.execCommand("copy");
 
-        let evidence = { create_time: new Date(), content: selectedText };
+        let evidence = {create_time: new Date(), content: selectedText.toString()};
         this.state.evidence_list.push(evidence);
         this.setState({evidences_list: this.state.evidence_list});
     }
@@ -197,7 +196,8 @@ class App extends React.Component {
     render() {
         return (
             <div className="main-page flex-column">
-                <NavBar selectionStart={ this.selectionBegin }/>
+                <NavBar selectionStart={ this.selectionBegin }
+                evidences={this.state.evidence_list} />
                 <div className="main-container flex-row">
                     <div className="pdf-view-container">
                         <div id="pdf-view-container">
