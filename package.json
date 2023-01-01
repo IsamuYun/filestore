@@ -15,8 +15,8 @@
     "react-datetime-picker": "^2.4.0",
     "react-dom": "^16.8.6",
     "react-image-crop": "^7.0.3",
-    "react-pdf": "^4.0.5",
-    "react-scripts": "3.0.1",
+    "react-pdf": "^6.2.1",
+    "react-scripts": "5.0.1",
     "save": "^2.4.0",
     "typescript": "^3.5.1"
   },
